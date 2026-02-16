@@ -7,6 +7,7 @@
 package auth
 
 import (
+	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -313,20 +314,22 @@ var File_auth_auth_proto protoreflect.FileDescriptor
 
 const file_auth_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x0fauth/auth.proto\x12\x04auth\"C\n" +
-	"\x0fRegisterRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"+\n" +
-	"\x10RegisterResponse\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\"W\n" +
-	"\fLoginRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x15\n" +
-	"\x06app_id\x18\x03 \x01(\x05R\x05appId\"%\n" +
-	"\rLoginResponse\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\")\n" +
-	"\x0eIsAdminRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\",\n" +
+	"\x0fauth/auth.proto\x12\x04auth\x1a\x17validate/validate.proto\"\x8c\x01\n" +
+	"\x0fRegisterRequest\x12Q\n" +
+	"\x05email\x18\x01 \x01(\tB;\xfaB8r6\x10\x04\x18@20^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$R\x05email\x12&\n" +
+	"\bpassword\x18\x02 \x01(\tB\n" +
+	"\xfaB\ar\x05\x10\b\x18\x80\x01R\bpassword\"4\n" +
+	"\x10RegisterResponse\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userId\"\xa9\x01\n" +
+	"\fLoginRequest\x12Q\n" +
+	"\x05email\x18\x01 \x01(\tB;\xfaB8r6\x10\x04\x18@20^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$R\x05email\x12&\n" +
+	"\bpassword\x18\x02 \x01(\tB\n" +
+	"\xfaB\ar\x05\x10\b\x18\x80\x01R\bpassword\x12\x1e\n" +
+	"\x06app_id\x18\x03 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x05appId\".\n" +
+	"\rLoginResponse\x12\x1d\n" +
+	"\x05token\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x05token\"2\n" +
+	"\x0eIsAdminRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userId\",\n" +
 	"\x0fIsAdminResponse\x12\x19\n" +
 	"\bis_admin\x18\x01 \x01(\bR\aisAdmin2\xab\x01\n" +
 	"\x04Auth\x129\n" +

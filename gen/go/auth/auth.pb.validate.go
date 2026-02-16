@@ -57,9 +57,38 @@ func (m *RegisterRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Email
+	if l := utf8.RuneCountInString(m.GetEmail()); l < 4 || l > 64 {
+		err := RegisterRequestValidationError{
+			field:  "Email",
+			reason: "value length must be between 4 and 64 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Password
+	if !_RegisterRequest_Email_Pattern.MatchString(m.GetEmail()) {
+		err := RegisterRequestValidationError{
+			field:  "Email",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetPassword()); l < 8 || l > 128 {
+		err := RegisterRequestValidationError{
+			field:  "Password",
+			reason: "value length must be between 8 and 128 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return RegisterRequestMultiError(errors)
@@ -139,6 +168,8 @@ var _ interface {
 	ErrorName() string
 } = RegisterRequestValidationError{}
 
+var _RegisterRequest_Email_Pattern = regexp.MustCompile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+
 // Validate checks the field values on RegisterResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -161,7 +192,16 @@ func (m *RegisterResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for UserId
+	if m.GetUserId() <= 0 {
+		err := RegisterResponseValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return RegisterResponseMultiError(errors)
@@ -263,11 +303,49 @@ func (m *LoginRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Email
+	if l := utf8.RuneCountInString(m.GetEmail()); l < 4 || l > 64 {
+		err := LoginRequestValidationError{
+			field:  "Email",
+			reason: "value length must be between 4 and 64 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Password
+	if !_LoginRequest_Email_Pattern.MatchString(m.GetEmail()) {
+		err := LoginRequestValidationError{
+			field:  "Email",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for AppId
+	if l := utf8.RuneCountInString(m.GetPassword()); l < 8 || l > 128 {
+		err := LoginRequestValidationError{
+			field:  "Password",
+			reason: "value length must be between 8 and 128 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetAppId() <= 0 {
+		err := LoginRequestValidationError{
+			field:  "AppId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return LoginRequestMultiError(errors)
@@ -346,6 +424,8 @@ var _ interface {
 	ErrorName() string
 } = LoginRequestValidationError{}
 
+var _LoginRequest_Email_Pattern = regexp.MustCompile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+
 // Validate checks the field values on LoginResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -368,7 +448,16 @@ func (m *LoginResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Token
+	if utf8.RuneCountInString(m.GetToken()) < 1 {
+		err := LoginResponseValidationError{
+			field:  "Token",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return LoginResponseMultiError(errors)
@@ -470,7 +559,16 @@ func (m *IsAdminRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for UserId
+	if m.GetUserId() <= 0 {
+		err := IsAdminRequestValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return IsAdminRequestMultiError(errors)

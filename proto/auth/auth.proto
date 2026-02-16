@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package auth;
 
+import "validate/validate.proto";
+
 option go_package = "github.com/stormhead-org/stormlink-protos/gen/go/auth;auth";
 
 service Auth {
@@ -11,26 +13,40 @@ service Auth {
 }
 
 message RegisterRequest {
-  string email = 1;
-  string password = 2;
+  string email = 1 [(validate.rules).string = {
+    min_len: 4
+    max_len: 64
+    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+  }];
+  string password = 2 [(validate.rules).string = {
+    min_len: 8
+    max_len: 128
+  }];
 }
 
 message RegisterResponse {
-  int64 user_id = 1;
+  int64 user_id = 1 [(validate.rules).int64.gt = 0];
 }
 
 message LoginRequest {
-  string email = 1;
-  string password = 2;
-  int32 app_id = 3;
+  string email = 1 [(validate.rules).string = {
+    min_len: 4
+    max_len: 64
+    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+  }];
+  string password = 2 [(validate.rules).string = {
+    min_len: 8
+    max_len: 128
+  }];
+  int32 app_id = 3 [(validate.rules).int32.gt = 0];
 }
 
 message LoginResponse {
-  string token = 1;
+  string token = 1 [(validate.rules).string.min_len = 1];
 }
 
 message IsAdminRequest {
-  int64 user_id = 1;
+  int64 user_id = 1 [(validate.rules).int64.gt = 0];
 }
 
 message IsAdminResponse {
